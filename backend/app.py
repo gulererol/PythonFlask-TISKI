@@ -14,6 +14,15 @@ class User(db.Model):
     password = db.Column(db.String, nullable=False)
     is_admin = db.Column(db.Boolean, default=False)
 
+class Complaint(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    title = db.Column(db.String, nullable=False)
+    description = db.Column(db.String, nullable=False)
+    address = db.Column(db.String, nullable=False)
+    status = db.Column(db.String, default='Acik')
+
+
 @app.route('/login', methods=['POST'])
 def login():
     data = request.json
@@ -46,6 +55,26 @@ def register():
         return jsonify({'message': 'Kayıt başarılı'})
     except Exception as e:
         return jsonify({'message': f'Kayıt başarısız. Hata: {str(e)}'})
+@app.route('/complaint', methods=['POST'])
+def create_complaint():
+    data = request.json
+    user_id = data['user_id']
+    title = data['title']
+    description = data['description']
+    address = data['address']
+
+    if not title or not description or not address:
+        return jsonify({'message': 'Arıza kaydı oluşturulamadı, lütfen tüm alanları doldurun'})
+
+    try:
+        new_complaint = Complaint(user_id=user_id, title=title, description=description, address=address)
+        db.session.add(new_complaint)
+        db.session.commit()
+
+        return jsonify({'message': 'Arıza kaydı oluşturuldu'})
+    except Exception as e:
+        return jsonify({'message': f'Arıza kaydı oluşturulamadı. Hata: {str(e)}'})
+    
     
 if __name__ == '__main__':
     with app.app_context():
