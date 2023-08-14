@@ -25,6 +25,7 @@ class Complaint(db.Model):
 
 @app.route('/login', methods=['POST'])
 def login():
+    print("Giriş yapma isteği alındı.")
     data = request.json
     username = data['username']
     password = data['password']
@@ -55,6 +56,8 @@ def register():
         return jsonify({'message': 'Kayıt başarılı'})
     except Exception as e:
         return jsonify({'message': f'Kayıt başarısız. Hata: {str(e)}'})
+    
+#Arıza kaydı oluşturma:    
 @app.route('/complaint', methods=['POST'])
 def create_complaint():
     data = request.json
@@ -74,6 +77,34 @@ def create_complaint():
         return jsonify({'message': 'Arıza kaydı oluşturuldu'})
     except Exception as e:
         return jsonify({'message': f'Arıza kaydı oluşturulamadı. Hata: {str(e)}'})
+    
+# Açık arıza kayıtları    
+@app.route('/complaints/open', methods=['GET'])
+def get_open_complaints():
+    open_complaints = Complaint.query.filter_by(status='Acik').all()
+    complaints = [{'id': c.id, 'user_id': c.user_id, 'title': c.title, 'description': c.description, 'address': c.address, 'status': c.status} for c in open_complaints]
+    
+    return jsonify({'complaints': complaints})
+
+#Kullanıcının arıza katıylarını görebilmesi için:
+
+@app.route('/user/<int:user_id>/complaints', methods=['GET'])
+def get_user_complaints(user_id):
+    user_complaints = Complaint.query.filter_by(user_id=user_id).all()
+    complaints = [{'id': c.id, 'user_id': c.user_id, 'title': c.title, 'description': c.description, 'address': c.address, 'status': c.status} for c in user_complaints]
+    
+    return jsonify({'complaints': complaints})
+
+# Çözümlenmiş arıza kayıtları:
+@app.route('/complaints/solved', methods=['GET'])
+def get_solved_complaints():
+    solved_complaints = Complaint.query.filter_by(status='Cozumlendi').all()
+    complaints = [{'id': c.id, 'user_id': c.user_id, 'title': c.title, 'description': c.description, 'address': c.address, 'status': c.status} for c in solved_complaints]
+    
+    return jsonify({'complaints': complaints})
+
+
+    
     
     
 if __name__ == '__main__':
