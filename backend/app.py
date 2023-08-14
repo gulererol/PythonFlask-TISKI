@@ -103,6 +103,31 @@ def get_solved_complaints():
     
     return jsonify({'complaints': complaints})
 
+# Arıza kaydındaki detayları görebilmek için:
+@app.route('/complaint/<int:complaint_id>', methods=['GET'])
+def get_complaint_detail(complaint_id):
+    complaint = Complaint.query.get(complaint_id)
+
+    if complaint:
+        complaint_data = {
+            'id': complaint.id,
+            'user_id': complaint.user_id,
+            'title': complaint.title,
+            'description': complaint.description,
+            'address': complaint.address,
+            'status': complaint.status,
+            'memnuniyet': complaint.memnuniyet,
+            'aciklama': complaint.aciklama,
+            'note': complaint.note,
+            'anket': complaint.anket
+        }
+        return jsonify({'complaint': complaint_data})
+    else:
+        return jsonify({'message': 'Arıza kaydı bulunamadı'})
+
+
+
+
 
     
     
