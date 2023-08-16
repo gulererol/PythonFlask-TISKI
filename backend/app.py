@@ -124,6 +124,50 @@ def get_complaint_detail(complaint_id):
         return jsonify({'complaint': complaint_data})
     else:
         return jsonify({'message': 'Arıza kaydı bulunamadı'})
+    
+@app.route('/user/<int:user_id>', methods=['GET'])
+def get_user_by_id(user_id):
+    user = User.query.get(user_id)
+
+    if user:
+        return jsonify({'username': user.username})
+    else:
+        return jsonify({'message': 'Kullanıcı bulunamadı'})
+
+   
+@app.route('/complaint/<int:complaint_id>/status', methods=['POST'])
+def update_complaint_status(complaint_id):
+    data = request.json
+    status = data['status']
+    note = data['note']
+
+    try:
+        complaint = Complaint.query.get(complaint_id)
+        complaint.status = status
+        complaint.note = 'Not: ' + note
+        db.session.commit()
+
+        return jsonify({'message': 'Statü güncellendi'})
+    except Exception as e:
+        return jsonify({'message': f'Statü güncellenemedi. Hata: {str(e)}'})
+
+# Memnuniyet anketi:
+@app.route('/complaint/<int:complaint_id>/den', methods=['POST'])
+def update_complaint_status2(complaint_id):
+    data = request.json
+    memnuniyet = data['memnuniyet']
+    aciklama = data['aciklama']
+    
+    try:
+        complaint = Complaint.query.get(complaint_id)
+        complaint.memnuniyet = memnuniyet
+        complaint.aciklama = aciklama
+        complaint.anket = True
+        db.session.commit()
+
+        return jsonify({'message': 'Anket gönderildi.'})
+    except Exception as e:
+        return jsonify({'message': f'Anket gönderilmedi. Hata: {str(e)}'})    
 
 
 
