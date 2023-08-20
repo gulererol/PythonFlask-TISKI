@@ -5,7 +5,7 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres@localhost:5432/tiski'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres@localhost:5432/deneme'
 db = SQLAlchemy(app)
 
 class User(db.Model):
@@ -167,7 +167,76 @@ def update_complaint_status2(complaint_id):
 
         return jsonify({'message': 'Anket gönderildi.'})
     except Exception as e:
-        return jsonify({'message': f'Anket gönderilmedi. Hata: {str(e)}'})    
+        return jsonify({'message': f'Anket gönderilmedi. Hata: {str(e)}'})  
+    
+
+# Kullanıcı detayı, güncelleme ve silme
+@app.route('/api/users/<int:user_id>', methods=['GET', 'PUT', 'DELETE'])
+def user_detail(user_id):
+    if request.method == 'GET':
+        user = User.query.get(user_id)
+        user1 =  User.query.filter_by(id=user_id).all()
+        users = [{'id': c.id, 'user_id': c.user_id, 'username': c.username, 'is_admin': c.is_admin, 'is_yetkili': c.is_yetkili } for c in user1]
+    
+        return jsonify({'users': users})
+    elif request.method == 'PUT':
+        data = request.json
+        is_admin = data.get('is_admin')
+        is_yetkili = data.get('is_yetkili')
+
+        user = User.query.get(user_id)
+        if user:
+            user.is_admin = is_admin
+            user.is_yetkili = is_yetkili
+            db.session.commit()
+            return jsonify({'message': 'Kullanıcı düzenlendi'})
+        else:
+            return jsonify({'message': 'Kullanıcı bulunamadı'}), 404
+
+    elif request.method == 'DELETE':
+        user = User.query.get(user_id)
+        if user:
+            db.session.delete(user)
+            db.session.commit()
+            return jsonify({'message': 'Kullanıcı silindi'})
+        else:
+            return jsonify({'message': 'Kullanıcı bulunamadı'}), 404
+
+
+@app.route('/api/users', methods=['GET', 'POST'])
+def users():
+    if request.method == 'GET':
+        users = User.query.filter((User.is_admin == True) | (User.is_yetkili == True)).all()
+        user_list = [{'id': u.id, 'username': u.username, 'is_admin': u.is_admin, 'is_yetkili': u.is_yetkili} for u in users]
+        return jsonify({'users': user_list})
+
+    elif request.method == 'POST':
+        data = request.json
+        username = data['username']
+        password = data['password']
+        is_admin = data['is_admin']
+        is_yetkili = data['is_yetkili']
+        print(data,"aaaaaa")
+        if not username or not password:
+            return jsonify({'message': 'Kullanıcı adı ve şifre alanları zorunludur.'}), 400
+
+        try:
+            new_user = User(username=username, password=password, is_admin=is_admin, is_yetkili=is_yetkili)
+            db.session.add(new_user)
+            db.session.commit()
+
+            return jsonify({'message': 'Kullanıcı eklendi'})
+        except Exception as e:
+            return jsonify({'message': 'Kullanıcı eklenirken bir hata oluştu. Hata: ' + str(e)}), 500
+
+
+# Anketi tamamlanmış arıza kayıtları:
+@app.route('/anketget', methods=['GET'])
+def get_completed_surveys():
+    completed_surveys = Complaint.query.filter_by(anket=True).all()
+    survey_list = [{'id': s.id, 'user_id': s.user_id, 'title': s.title, 'description': s.description, 'address': s.address, 'status': s.status, 'note': s.note, 'memnuniyet': s.memnuniyet, 'aciklama': s.aciklama, 'anket': s.anket} for s in completed_surveys]
+    return jsonify({'anket': survey_list})
+      
 
 
 
