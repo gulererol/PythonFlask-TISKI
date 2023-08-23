@@ -1,0 +1,222 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.app-container {
+  text-align: center;
+  margin-top: 100px;
+}
+
+.button {
+  margin-top: 30px;
+}
+.navbar {
+  position: relative;
+  font: xx-large;
+  background-color: #1d4785;
+}
+.tiskilogo {
+  height: 100px;
+  width: min-content;
+  display: flex;
+}
+.girisbutonkutusu {
+  text-align: center;
+  margin-top: 150px;
+}
+#girisyap {
+  margin-right: 20px;
+}
+#kayitol {
+  margin-left: 20px;
+}
+
+.girisbutonlari {
+  background-color: #125574;
+  color: #ffffff;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 30px;
+  border-style: solid;
+  border-color: #1357ce31;
+  text-decoration: none;
+  border-radius: 8px;
+  text-align: center;
+}
+.buton {
+  background-color: #125574;
+  color: #ffffff;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 23px;
+  border-style: solid;
+  border-color: #1357ce31;
+  text-decoration: none;
+  border-radius: 8px;
+}
+.buton:hover {
+  background-color: #1c61c7;
+  color: white;
+}
+.arkaplan {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background-image: url("./assets/wave.png");
+  opacity: 0.5;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-color: rgba(7, 101, 129, 0.945);
+}
+.centerdiv {
+  text-align: center;
+  margin-top: 70px;
+}
+.cevir {
+  margin-top: 10px;
+  margin-left: 4px;
+  rotate: calc(90deg);
+}
+.altbaslik {
+  font-size: larger;
+  font-weight: bold;
+}
+.kucukikon {
+  height: 35px;
+  width: 35px;
+}
+.tablo {
+  margin-top: 10px;
+  width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.tabloBasligi {
+  font-size: larger;
+  background-color: #494545;
+  text-align: left;
+  color: white;
+  padding: 0 10px;
+}
+.tabloİcerik {
+  text-align: left;
+  color: rgba(255, 255, 255, 0.904);
+  background-color: #5a5757d2;
+  border: #0e445e9d;
+  border-style: solid;
+  border-width: 2px;
+}
+.baslik {
+  font-size: xx-large;
+  text-align: center;
+}
+#complainttitle {
+  text-align: center;
+  margin-top: 20px;
+}
+.center {
+  text-align: center;
+}
+.ul {
+  text-align: center;
+  font-size: larger;
+}
+.minibaslik {
+  font-size: medium;
+  font-weight: bold;
+}
+.saributon {
+  background-color: yellow;
+  color: black;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 23px;
+  border-style: solid;
+  border-color: #1357ce31;
+  text-decoration: none;
+  border-radius: 8px;
+}
+.kirmizibuton {
+  background-color: #fc0303e8;
+  color: #ffffff;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 23px;
+  border-style: solid;
+  border-color: #1357ce31;
+  text-decoration: none;
+  border-radius: 8px;
+}
+.adminpanelbaslik {
+  font-weight: bold;
+  font-size: larger;
+  color: darkmagenta;
+  padding: 0 10px;
+}
+.icerik {
+  padding-left: 1px;
+}
+.aramakutusu {
+  text-align: left;
+}
+.sayfabutonu {
+  display: inline-block;
+  outline: 0;
+  border: 0;
+  cursor: pointer;
+  background-color: white;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 16px;
+  font-weight: 600;
+  color: rgb(43, 108, 176);
+  border: 1px solid rgb(66, 153, 225);
+  line-height: 26px;
+}
+.sayfabutonu:hover {
+  display: inline-block;
+  outline: 0;
+  border: 0;
+  cursor: pointer;
+  background-color: rgb(43, 108, 176);
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+  border: 1px solid rgb(66, 153, 225);
+  line-height: 26px;
+}
+.rightdiv {
+  text-align: right;
+  margin-right: 175px;
+}
+.geri {
+  text-decoration: none;
+  font-size: x-large;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: bold;
+  color: white;
+  border-style: solid;
+  border-color: #215c77;
+  background-color: #125574;
+  border-radius: 30%;
+  margin-left: 30px;
+}
+.geri:hover {
+  color: rgb(126, 200, 224);
+}
+.leftmargin {
+  margin-left: 440px;
+}
+.sikayetaciklama {
+  font-weight: normal !important;
+}
+.yesil {
+  color: lightgreen;
+}
+.kirmizi {
+  color: red;
+}
